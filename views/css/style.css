@@ -1,0 +1,20 @@
+body{
+  background-color: #480074;
+  padding-top:25px;
+}
+.login-notify {
+    margin-right: 5px;
+    font-style: italic;
+    color: red;
+}
+ul>li>a:hover{
+  cursor:pointer;
+}
+main{
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #F8F8F8;
+}
+.row{
+  margin-top:20px;
+}
