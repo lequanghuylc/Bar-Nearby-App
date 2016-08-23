@@ -3,7 +3,7 @@ var $ = require('jquery');
 var Venue = React.createClass({
     getInitialState: function(){
       return ({
-          goOrNot: false
+          goOrNot: this.props.toggle
       });  
     },
     handleClick: function(){
@@ -11,12 +11,12 @@ var Venue = React.createClass({
           this.setState({
               goOrNot: false
           });
-          this.props.toggleGoing(this.props.venueID, this.props.going, false);
+          this.props.toggleGoing(this.props.venueID, this.props.going, false, this.props.number);
       } else{
           this.setState({
               goOrNot: true
           });
-          this.props.toggleGoing(this.props.venueID, this.props.going, true);
+          this.props.toggleGoing(this.props.venueID, this.props.going, true, this.props.number);
       }
     },
     render: function(){

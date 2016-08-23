@@ -30,7 +30,7 @@ gulp.task('watch', function() {
   gulp.watch( app + '/css/**/*.css', ['css']);
   gulp.watch([ app + '/**/*.html'], ['html']);
 });
-/*
+
 gulp.task('webserver', function(cb) {
   exec('node index.js', function (err, stdout, stderr) {
     console.log(stdout);
@@ -43,5 +43,5 @@ gulp.task('webserver', function(cb) {
     cb(err);
   });
 });
-*/
-gulp.task('default', ['watch', 'html', 'js', 'css']);
+
+gulp.task('default', ['watch', 'html', 'js', 'css', 'webserver']);

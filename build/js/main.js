@@ -92,18 +92,24 @@ var Main = React.createClass({
                         $.get("/getgoing/"+val.id, function(data3){
                             if(data3.length ===0){ var going = 0;}
                             else {var going = data3[0].going;}
-                            resultData.push({
+                            $.get("/gettoggle/"+this.state.username+"/"+val.id, function(data4){
+                               resultData.push({
                                  "id": val.id,
                                  "image": img,
                                  "location": [val.location.lat, val.location.lng],
                                  "distance": val.location.distance,
                                  "name": val.name,
-                                 "going": going
+                                 "going": going,
+                                 "toggle": data4.toggle
                               });
                               this.setState({
                                   finding: false,
                                   result: resultData
-                              });
+                              }); 
+                                
+                            }.bind(this));
+                            
+                            
                         }.bind(this));
                       
                   }.bind(this));
@@ -126,19 +132,42 @@ var Main = React.createClass({
             this.receiveData(); 
         }.bind(this));
     },
-    toggleGoing: function(id, going, boo){
+    toggleGoing: function(id, going, boo, number){
+        $.post('/usertogglegoing/', {
+                    "id": id,
+                    "user": this.state.username
+                }, function(data){});
         if(boo){
             if(going === 0){
-                
+                $.post('/addgoing/', {
+                    "_id": id
+                }, function(data){
+                    console.log("add new going ok");    
+                });
+                var result = this.state.result;
+                result[number].going = 1;
+                this.setState({result: result});
             } else {
-                
+                $.post('/updategoing/', {
+                    "_id": id,
+                    "going": 1
+                }, function(data){
+                    console.log("update going ok");    
+                });
+                var result = this.state.result;
+                result[number].going++;
+                this.setState({result: result});
             }
         } else {
-            if(going ===0){
-                
-            } else {
-                
-            }
+            $.post('/updategoing/', {
+                    "_id": id,
+                    "going": -1
+                }, function(data){
+                    console.log("update not going ok");    
+            });
+            var result = this.state.result;
+                result[number].going--;
+                this.setState({result: result});
         }
     },
     render: function(){
@@ -146,14 +175,13 @@ var Main = React.createClass({
         var result = typeof this.state.result === "string" ? this.state.result : this.state.result.map(function(val, index){
              
             return (
-                <Venue key={index} venueID={val.id} location={val.location} toggleGoing={this.toggleGoing} isDisable={this.state.notLoggedin}
-                     going={val.going} image={val.image} distance={val.distance} name={val.name}/>
+                <Venue key={index} number={index} venueID={val.id} location={val.location} toggleGoing={this.toggleGoing} isDisable={this.state.notLoggedin}
+                     going={val.going} image={val.image} distance={val.distance} name={val.name} toggle={val.toggle}/>
             );
         }.bind(this));
         if(this.state.notLoggedin === false){
             var generateMenu = [
                 <Menu text={"Welcome "+this.state.username} key="1"/>,
-                <Menu text="My Places" key="4" />,
                 <Menu text="Logout" logout={this.logout} key="5"/>
                 ];
             var generateLoginForm = [];
