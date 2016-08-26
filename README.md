@@ -7,4 +7,4 @@ Node + React Application search Bar nearby your location
 ## Live demo instruction
 1. Go to ide, (login using your account, it's free!)
 2. Run the command __gulp__ in terminal
-3. Go to [https://voteapp-quanghuyf.c9users.io](https://barnearby-quanghuyf.c9users.io/) to view application in browser
+3. Go to [https://barnearby-quanghuyf.c9users.io/](https://barnearby-quanghuyf.c9users.io/) to view application in browser
