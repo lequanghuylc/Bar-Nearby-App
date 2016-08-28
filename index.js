@@ -51,7 +51,7 @@ app.get("/gettoggle/*", function(req,res){
    var venueID = arr[3];
    findUser({"user":user}, function(err,docs){
       if(err){throw err;}
-      if(docs[0].venue === undefined){res.send({toggle: false});}
+      if(typeof docs[0].venue === "undefined"){res.send({toggle: false});}
       else {
           var venueArr = JSON.stringify(docs[0].venue);
           if(venueArr.indexOf(venueID) === -1){res.send({toggle: false});}
